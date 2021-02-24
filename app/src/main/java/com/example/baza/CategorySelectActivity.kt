@@ -28,6 +28,7 @@ class CategorySelectActivity : AppCompatActivity() {
         if (auth.currentUser != null) {
             val mainIntent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
+            finish()
         }
         db.collection("categories")
             .get()

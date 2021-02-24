@@ -32,26 +32,26 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        category = getIntent().getStringExtra("category").toString()
+//        category = getIntent().getStringExtra("category").toString()
 
         auth = FirebaseAuth.getInstance()
 
         loginBtn.setOnClickListener {
-
+            signInUser()
         }
 
 
         registerBtn.setOnClickListener {
             signUpUser()
         }
-        Log.d(TAG, "onCreate: ")
+//        Log.d(TAG, "onCreate: ")
 
         base_constraint.setOnClickListener {
             hideKeyboard(base_constraint)
         }
     }
 
-    private fun signUpUser() {
+    private fun checkInput() {
         if (emailEditText.text.toString().isEmpty()) {
             emailEditText.error = getString(R.string.email_kirit)
             emailEditText.requestFocus()
@@ -69,6 +69,11 @@ class RegisterActivity : AppCompatActivity() {
             passwordEditText.requestFocus()
             return
         }
+    }
+
+    private fun signUpUser() {
+
+        checkInput()
 
         auth.createUserWithEmailAndPassword(
             emailEditText.text.toString(),
@@ -100,6 +105,35 @@ class RegisterActivity : AppCompatActivity() {
                 // ...
             }
 
+    }
+
+    private fun signInUser() {
+        checkInput()
+        auth.signInWithEmailAndPassword(
+            emailEditText.text.toString(),
+            passwordEditText.text.toString()
+        )
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                    val mainIntent = Intent(this, MainActivity::class.java)
+                    startActivity(mainIntent)
+                    finish()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+//                    updateUI(null)
+                    // ...
+                }
+
+                // ...
+            }
     }
 
     fun Context.hideKeyboard(view: View) {

@@ -1,9 +1,11 @@
 package com.example.baza
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,12 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "signed in: " + auth.currentUser!!.email.toString())
         } else {
             Log.d(TAG, "not signed in")
+        }
+
+        buy_btn.setOnClickListener {
+            val buyIntent = Intent(this, BuyProductsActivity::class.java)
+            startActivity(buyIntent)
+            finish()
         }
     }
 }

@@ -11,5 +11,8 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="kategoriyani_tanlang">Kategoriyani Tanlang</string>
     <string name="tanlash">Tanlash</string>
+    <string name="sotib_olish">Sotib Olish</string>
+    <string name="hisobot">Hisobot</string>
+    <string name="sotish">Sotish</string>
 
 </resources>
